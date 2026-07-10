@@ -1,0 +1,44 @@
+{
+  "feed": {
+    "author": {
+      "name": {"label": "iTunes Store"}
+    },
+    "entry": [
+      {
+        "author": {
+          "uri": {"label": "https://itunes.apple.com/us/reviews/id1001"},
+          "name": {"label": "Fixture Reviewer"}
+        },
+        "updated": {"label": "2026-06-25T10:00:00-07:00"},
+        "im:rating": {"label": "5"},
+        "im:version": {"label": "1.2.3"},
+        "id": {"label": "review-1001"},
+        "title": {"label": "Great update"},
+        "content": {"label": "I love this app. It works perfectly!", "attributes": {"type": "text"}},
+        "link": {"attributes": {"rel": "related", "href": "https://itunes.apple.com/us/review?id=123"}},
+        "im:voteSum": {"label": "3"},
+        "im:voteCount": {"label": "4"}
+      },
+      {
+        "author": {"name": {"label": "Second Reviewer"}},
+        "updated": {"label": "2026-06-24T08:30:00Z"},
+        "im:rating": {"label": "1"},
+        "im:version": {"label": "1.2.2"},
+        "id": {"label": "review-1002"},
+        "title": {"label": "Broken"},
+        "content": {"label": "Terrible app. It crashes every time.", "attributes": {"type": "text"}},
+        "im:voteSum": {"label": "0"},
+        "im:voteCount": {"label": "0"}
+      },
+      {
+        "id": {"label": "feed-metadata-like-entry"},
+        "title": {"label": "Not a customer review"}
+      }
+    ],
+    "link": [
+      {"attributes": {"rel": "self", "href": "https://example.test/page=1"}},
+      {"attributes": {"rel": "next", "href": "https://example.test/page=2"}}
+    ],
+    "title": {"label": "iTunes Store: Customer Reviews"}
+  }
+}

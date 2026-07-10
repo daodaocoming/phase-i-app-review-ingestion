@@ -1,0 +1,30 @@
+apps:
+  - app_id: "284882215"
+    app_name: Facebook
+    vertical: Social
+    storefront: us
+    expected_language: en
+    enabled: true
+    notes: High-volume consumer social platform.
+
+  - app_id: "368677368"
+    app_name: Uber
+    vertical: Mobility
+    storefront: us
+    expected_language: en
+    enabled: true
+    notes: Ride-hailing and local mobility service.
+
+  - app_id: "570060128"
+    app_name: Duolingo
+    vertical: Education
+    storefront: us
+    expected_language: en
+    enabled: true
+    notes: Consumer language-learning application.
+
+settings:
+  max_pages_per_app: 2
+  timeout_seconds: 15
+  retry_count: 3
+  delay_seconds: 1.0
