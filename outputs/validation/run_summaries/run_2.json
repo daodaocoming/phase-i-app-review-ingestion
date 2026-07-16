@@ -1,0 +1,801 @@
+{
+  "run_id": 2,
+  "status": "completed",
+  "started_at": "2026-07-16T02:58:04.244554Z",
+  "completed_at": "2026-07-16T02:58:34.620962Z",
+  "config": {
+    "apps": [
+      {
+        "app_id": "284882215",
+        "app_name": "Facebook",
+        "enabled": true,
+        "expected_language": "en",
+        "notes": "High-volume consumer social platform.",
+        "storefront": "us",
+        "vertical": "Social"
+      },
+      {
+        "app_id": "368677368",
+        "app_name": "Uber",
+        "enabled": true,
+        "expected_language": "en",
+        "notes": "Ride-hailing and local mobility service.",
+        "storefront": "us",
+        "vertical": "Mobility"
+      },
+      {
+        "app_id": "570060128",
+        "app_name": "Duolingo",
+        "enabled": true,
+        "expected_language": "en",
+        "notes": "Consumer language-learning application.",
+        "storefront": "us",
+        "vertical": "Education"
+      },
+      {
+        "app_id": "389801252",
+        "app_name": "Instagram",
+        "enabled": true,
+        "expected_language": "en",
+        "notes": "Photo and short-form social platform.",
+        "storefront": "us",
+        "vertical": "Social"
+      },
+      {
+        "app_id": "297606951",
+        "app_name": "Amazon",
+        "enabled": true,
+        "expected_language": "en",
+        "notes": "General marketplace and shopping application.",
+        "storefront": "us",
+        "vertical": "Shopping"
+      },
+      {
+        "app_id": "324684580",
+        "app_name": "Spotify",
+        "enabled": true,
+        "expected_language": "en",
+        "notes": "Music and audio streaming application.",
+        "storefront": "us",
+        "vertical": "Music"
+      },
+      {
+        "app_id": "401626263",
+        "app_name": "Airbnb",
+        "enabled": true,
+        "expected_language": "en",
+        "notes": "Travel accommodation and experiences marketplace.",
+        "storefront": "us",
+        "vertical": "Travel"
+      },
+      {
+        "app_id": "493145008",
+        "app_name": "Headspace",
+        "enabled": true,
+        "expected_language": "en",
+        "notes": "Meditation and mindfulness application.",
+        "storefront": "us",
+        "vertical": "Health and Fitness"
+      },
+      {
+        "app_id": "422689480",
+        "app_name": "Gmail",
+        "enabled": true,
+        "expected_language": "en",
+        "notes": "Consumer email and productivity application.",
+        "storefront": "us",
+        "vertical": "Productivity"
+      },
+      {
+        "app_id": "351727428",
+        "app_name": "Venmo",
+        "enabled": true,
+        "expected_language": "en",
+        "notes": "Peer-to-peer payments application.",
+        "storefront": "us",
+        "vertical": "Finance"
+      },
+      {
+        "app_id": "719972451",
+        "app_name": "DoorDash",
+        "enabled": true,
+        "expected_language": "en",
+        "notes": "Food delivery marketplace application.",
+        "storefront": "us",
+        "vertical": "Food and Drink"
+      },
+      {
+        "app_id": "585027354",
+        "app_name": "Google Maps",
+        "enabled": true,
+        "expected_language": "en",
+        "notes": "Maps, directions, and local discovery application.",
+        "storefront": "us",
+        "vertical": "Navigation"
+      }
+    ],
+    "max_pages": 2,
+    "settings": {
+      "delay_seconds": 1.0,
+      "max_pages_per_app": 2,
+      "retry_count": 3,
+      "timeout_seconds": 15.0
+    }
+  },
+  "stats": {
+    "apps_attempted": 12,
+    "pages_fetched": 24,
+    "reviews_parsed": 1200,
+    "reviews_inserted": 100,
+    "reviews_updated": 1100,
+    "reviews_rejected": 0,
+    "flags_created": 11,
+    "failed_requests": 0,
+    "flags_by_type": {
+      "duplicate_text_within_app": 2,
+      "non_english_or_unknown_language": 36,
+      "rating_text_mismatch": 38,
+      "too_short_review": 89
+    },
+    "errors": []
+  },
+  "apps": [
+    {
+      "ingestion_run_app_stat_id": 19,
+      "ingestion_run_id": 2,
+      "app_id": 7,
+      "app_storefront_id": 7,
+      "run_status": "completed",
+      "pages_requested": 2,
+      "pages_fetched": 2,
+      "reviews_parsed": 100,
+      "reviews_inserted": 0,
+      "reviews_updated": 100,
+      "reviews_rejected": 0,
+      "flags_created": 0,
+      "failed_requests": 0,
+      "flag_counts": {
+        "non_english_or_unknown_language": 1,
+        "rating_text_mismatch": 4,
+        "too_short_review": 2
+      },
+      "created_at": "2026-07-16 02:58:19",
+      "completed_at": "2026-07-16T02:58:22.215849Z",
+      "app_name": "Airbnb",
+      "source_app_id": "401626263",
+      "vertical_name": "Travel",
+      "storefront": "us",
+      "errors": [],
+      "pages": [
+        {
+          "run_id": 2,
+          "raw_page_id": 37,
+          "app_storefront_id": 7,
+          "app_name": "Airbnb",
+          "source_app_id": "401626263",
+          "storefront": "us",
+          "page_number": 1,
+          "response_hash": "5de3d6769c52dce3a95c16e005e54c0358955840ac0b6ed8dfb9390b91f9ea41",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        },
+        {
+          "run_id": 2,
+          "raw_page_id": 38,
+          "app_storefront_id": 7,
+          "app_name": "Airbnb",
+          "source_app_id": "401626263",
+          "storefront": "us",
+          "page_number": 2,
+          "response_hash": "b3946ac92e8eac9070d5bbf0646315c9bfed202d7a21e829f6e13d70e954569d",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        }
+      ]
+    },
+    {
+      "ingestion_run_app_stat_id": 17,
+      "ingestion_run_id": 2,
+      "app_id": 5,
+      "app_storefront_id": 5,
+      "run_status": "completed",
+      "pages_requested": 2,
+      "pages_fetched": 2,
+      "reviews_parsed": 100,
+      "reviews_inserted": 50,
+      "reviews_updated": 50,
+      "reviews_rejected": 0,
+      "flags_created": 3,
+      "failed_requests": 0,
+      "flag_counts": {
+        "non_english_or_unknown_language": 1,
+        "rating_text_mismatch": 2,
+        "too_short_review": 5
+      },
+      "created_at": "2026-07-16 02:58:14",
+      "completed_at": "2026-07-16T02:58:17.026415Z",
+      "app_name": "Amazon",
+      "source_app_id": "297606951",
+      "vertical_name": "Shopping",
+      "storefront": "us",
+      "errors": [],
+      "pages": [
+        {
+          "run_id": 2,
+          "raw_page_id": 33,
+          "app_storefront_id": 5,
+          "app_name": "Amazon",
+          "source_app_id": "297606951",
+          "storefront": "us",
+          "page_number": 1,
+          "response_hash": "ac9ba8a15a0942b0265f68cd92edb6f25b081a8f25ba03b873423581a6e7e0eb",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        },
+        {
+          "run_id": 2,
+          "raw_page_id": 34,
+          "app_storefront_id": 5,
+          "app_name": "Amazon",
+          "source_app_id": "297606951",
+          "storefront": "us",
+          "page_number": 2,
+          "response_hash": "6573b62fa618cde269848513f3fd4b0c28a1c642c560a9c0c72d4f3876d1a4e5",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        }
+      ]
+    },
+    {
+      "ingestion_run_app_stat_id": 23,
+      "ingestion_run_id": 2,
+      "app_id": 11,
+      "app_storefront_id": 11,
+      "run_status": "completed",
+      "pages_requested": 2,
+      "pages_fetched": 2,
+      "reviews_parsed": 100,
+      "reviews_inserted": 0,
+      "reviews_updated": 100,
+      "reviews_rejected": 0,
+      "flags_created": 0,
+      "failed_requests": 0,
+      "flag_counts": {
+        "non_english_or_unknown_language": 3,
+        "too_short_review": 9
+      },
+      "created_at": "2026-07-16 02:58:29",
+      "completed_at": "2026-07-16T02:58:31.798444Z",
+      "app_name": "DoorDash",
+      "source_app_id": "719972451",
+      "vertical_name": "Food and Drink",
+      "storefront": "us",
+      "errors": [],
+      "pages": [
+        {
+          "run_id": 2,
+          "raw_page_id": 45,
+          "app_storefront_id": 11,
+          "app_name": "DoorDash",
+          "source_app_id": "719972451",
+          "storefront": "us",
+          "page_number": 1,
+          "response_hash": "514f4d396281510e3da45c0c8538c5312f67a2ae6add1cb623113f325ec594fc",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        },
+        {
+          "run_id": 2,
+          "raw_page_id": 46,
+          "app_storefront_id": 11,
+          "app_name": "DoorDash",
+          "source_app_id": "719972451",
+          "storefront": "us",
+          "page_number": 2,
+          "response_hash": "192aea81d4e7c756595b65bd63cda008f3bf13bf65b5cf24c0a58007b9ab5f27",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        }
+      ]
+    },
+    {
+      "ingestion_run_app_stat_id": 15,
+      "ingestion_run_id": 2,
+      "app_id": 3,
+      "app_storefront_id": 3,
+      "run_status": "completed",
+      "pages_requested": 2,
+      "pages_fetched": 2,
+      "reviews_parsed": 100,
+      "reviews_inserted": 50,
+      "reviews_updated": 50,
+      "reviews_rejected": 0,
+      "flags_created": 7,
+      "failed_requests": 0,
+      "flag_counts": {
+        "non_english_or_unknown_language": 4,
+        "rating_text_mismatch": 5,
+        "too_short_review": 1
+      },
+      "created_at": "2026-07-16 02:58:09",
+      "completed_at": "2026-07-16T02:58:11.907602Z",
+      "app_name": "Duolingo",
+      "source_app_id": "570060128",
+      "vertical_name": "Education",
+      "storefront": "us",
+      "errors": [],
+      "pages": [
+        {
+          "run_id": 2,
+          "raw_page_id": 29,
+          "app_storefront_id": 3,
+          "app_name": "Duolingo",
+          "source_app_id": "570060128",
+          "storefront": "us",
+          "page_number": 1,
+          "response_hash": "a6bc21c68ffd361a090cb8722df34d471209e63566305fd0920a2402ab528405",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        },
+        {
+          "run_id": 2,
+          "raw_page_id": 30,
+          "app_storefront_id": 3,
+          "app_name": "Duolingo",
+          "source_app_id": "570060128",
+          "storefront": "us",
+          "page_number": 2,
+          "response_hash": "2896fe9dc5d6564f90f7b09e42baa6058a4498ab8abde63117ad58b9b1709434",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        }
+      ]
+    },
+    {
+      "ingestion_run_app_stat_id": 13,
+      "ingestion_run_id": 2,
+      "app_id": 1,
+      "app_storefront_id": 1,
+      "run_status": "completed",
+      "pages_requested": 2,
+      "pages_fetched": 2,
+      "reviews_parsed": 100,
+      "reviews_inserted": 0,
+      "reviews_updated": 100,
+      "reviews_rejected": 0,
+      "flags_created": 0,
+      "failed_requests": 0,
+      "flag_counts": {
+        "non_english_or_unknown_language": 7,
+        "rating_text_mismatch": 3,
+        "too_short_review": 20
+      },
+      "created_at": "2026-07-16 02:58:04",
+      "completed_at": "2026-07-16T02:58:06.974152Z",
+      "app_name": "Facebook",
+      "source_app_id": "284882215",
+      "vertical_name": "Social",
+      "storefront": "us",
+      "errors": [],
+      "pages": [
+        {
+          "run_id": 2,
+          "raw_page_id": 25,
+          "app_storefront_id": 1,
+          "app_name": "Facebook",
+          "source_app_id": "284882215",
+          "storefront": "us",
+          "page_number": 1,
+          "response_hash": "f21b68c4d2729ecfc2a6c4495fa99996e69ad2cbdbe9ac1fdd969408bd171da6",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        },
+        {
+          "run_id": 2,
+          "raw_page_id": 26,
+          "app_storefront_id": 1,
+          "app_name": "Facebook",
+          "source_app_id": "284882215",
+          "storefront": "us",
+          "page_number": 2,
+          "response_hash": "b9831f884a56c44605cf6197bde8efa3a59c3d1027ed80782805df894dccfe52",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        }
+      ]
+    },
+    {
+      "ingestion_run_app_stat_id": 21,
+      "ingestion_run_id": 2,
+      "app_id": 9,
+      "app_storefront_id": 9,
+      "run_status": "completed",
+      "pages_requested": 2,
+      "pages_fetched": 2,
+      "reviews_parsed": 100,
+      "reviews_inserted": 0,
+      "reviews_updated": 100,
+      "reviews_rejected": 0,
+      "flags_created": 0,
+      "failed_requests": 0,
+      "flag_counts": {
+        "non_english_or_unknown_language": 6,
+        "rating_text_mismatch": 2,
+        "too_short_review": 7
+      },
+      "created_at": "2026-07-16 02:58:24",
+      "completed_at": "2026-07-16T02:58:27.019663Z",
+      "app_name": "Gmail",
+      "source_app_id": "422689480",
+      "vertical_name": "Productivity",
+      "storefront": "us",
+      "errors": [],
+      "pages": [
+        {
+          "run_id": 2,
+          "raw_page_id": 41,
+          "app_storefront_id": 9,
+          "app_name": "Gmail",
+          "source_app_id": "422689480",
+          "storefront": "us",
+          "page_number": 1,
+          "response_hash": "b0866483df9a776c29a4240ce58f35a682412861070b3f846ca005932067caf2",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        },
+        {
+          "run_id": 2,
+          "raw_page_id": 42,
+          "app_storefront_id": 9,
+          "app_name": "Gmail",
+          "source_app_id": "422689480",
+          "storefront": "us",
+          "page_number": 2,
+          "response_hash": "d14ded4f88576a475fd8ff3330ceab3da161d9021675d5e313c15b026ab51bd1",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        }
+      ]
+    },
+    {
+      "ingestion_run_app_stat_id": 24,
+      "ingestion_run_id": 2,
+      "app_id": 12,
+      "app_storefront_id": 12,
+      "run_status": "completed",
+      "pages_requested": 2,
+      "pages_fetched": 2,
+      "reviews_parsed": 100,
+      "reviews_inserted": 0,
+      "reviews_updated": 100,
+      "reviews_rejected": 0,
+      "flags_created": 0,
+      "failed_requests": 0,
+      "flag_counts": {
+        "non_english_or_unknown_language": 4,
+        "rating_text_mismatch": 2,
+        "too_short_review": 5
+      },
+      "created_at": "2026-07-16 02:58:31",
+      "completed_at": "2026-07-16T02:58:34.620348Z",
+      "app_name": "Google Maps",
+      "source_app_id": "585027354",
+      "vertical_name": "Navigation",
+      "storefront": "us",
+      "errors": [],
+      "pages": [
+        {
+          "run_id": 2,
+          "raw_page_id": 47,
+          "app_storefront_id": 12,
+          "app_name": "Google Maps",
+          "source_app_id": "585027354",
+          "storefront": "us",
+          "page_number": 1,
+          "response_hash": "f726c2e8b9753d386829010c2c571b41e285360e4b034d04a7abf460ebb2f323",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        },
+        {
+          "run_id": 2,
+          "raw_page_id": 48,
+          "app_storefront_id": 12,
+          "app_name": "Google Maps",
+          "source_app_id": "585027354",
+          "storefront": "us",
+          "page_number": 2,
+          "response_hash": "627d0937a580ef882d784695474599921055dcca4e92b16648e23e4f1b23b1d8",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        }
+      ]
+    },
+    {
+      "ingestion_run_app_stat_id": 20,
+      "ingestion_run_id": 2,
+      "app_id": 8,
+      "app_storefront_id": 8,
+      "run_status": "completed",
+      "pages_requested": 2,
+      "pages_fetched": 2,
+      "reviews_parsed": 100,
+      "reviews_inserted": 0,
+      "reviews_updated": 100,
+      "reviews_rejected": 0,
+      "flags_created": 0,
+      "failed_requests": 0,
+      "flag_counts": {
+        "rating_text_mismatch": 15,
+        "too_short_review": 1
+      },
+      "created_at": "2026-07-16 02:58:22",
+      "completed_at": "2026-07-16T02:58:24.733954Z",
+      "app_name": "Headspace",
+      "source_app_id": "493145008",
+      "vertical_name": "Health and Fitness",
+      "storefront": "us",
+      "errors": [],
+      "pages": [
+        {
+          "run_id": 2,
+          "raw_page_id": 39,
+          "app_storefront_id": 8,
+          "app_name": "Headspace",
+          "source_app_id": "493145008",
+          "storefront": "us",
+          "page_number": 1,
+          "response_hash": "42909f55b5fe0c8dfc78706996392efa25304cfaa542002f1d219a0945e03385",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        },
+        {
+          "run_id": 2,
+          "raw_page_id": 40,
+          "app_storefront_id": 8,
+          "app_name": "Headspace",
+          "source_app_id": "493145008",
+          "storefront": "us",
+          "page_number": 2,
+          "response_hash": "57e36f9e6ab52c177360823856c80cd33a372f589bc07aee4fc25395eea0d366",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        }
+      ]
+    },
+    {
+      "ingestion_run_app_stat_id": 16,
+      "ingestion_run_id": 2,
+      "app_id": 4,
+      "app_storefront_id": 4,
+      "run_status": "completed",
+      "pages_requested": 2,
+      "pages_fetched": 2,
+      "reviews_parsed": 100,
+      "reviews_inserted": 0,
+      "reviews_updated": 100,
+      "reviews_rejected": 0,
+      "flags_created": 0,
+      "failed_requests": 0,
+      "flag_counts": {
+        "non_english_or_unknown_language": 5,
+        "rating_text_mismatch": 3,
+        "too_short_review": 11
+      },
+      "created_at": "2026-07-16 02:58:11",
+      "completed_at": "2026-07-16T02:58:14.196912Z",
+      "app_name": "Instagram",
+      "source_app_id": "389801252",
+      "vertical_name": "Social",
+      "storefront": "us",
+      "errors": [],
+      "pages": [
+        {
+          "run_id": 2,
+          "raw_page_id": 31,
+          "app_storefront_id": 4,
+          "app_name": "Instagram",
+          "source_app_id": "389801252",
+          "storefront": "us",
+          "page_number": 1,
+          "response_hash": "10605f3ba95616b63d6066a997b407357e8eb4d2ac175c992b753fc5c48c1aa5",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        },
+        {
+          "run_id": 2,
+          "raw_page_id": 32,
+          "app_storefront_id": 4,
+          "app_name": "Instagram",
+          "source_app_id": "389801252",
+          "storefront": "us",
+          "page_number": 2,
+          "response_hash": "228b6a567adf83ce02262737dff5b7cb1927a3a967fa46c22a008694f08467d2",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        }
+      ]
+    },
+    {
+      "ingestion_run_app_stat_id": 18,
+      "ingestion_run_id": 2,
+      "app_id": 6,
+      "app_storefront_id": 6,
+      "run_status": "completed",
+      "pages_requested": 2,
+      "pages_fetched": 2,
+      "reviews_parsed": 100,
+      "reviews_inserted": 0,
+      "reviews_updated": 100,
+      "reviews_rejected": 0,
+      "flags_created": 1,
+      "failed_requests": 0,
+      "flag_counts": {
+        "duplicate_text_within_app": 2,
+        "non_english_or_unknown_language": 3,
+        "too_short_review": 13
+      },
+      "created_at": "2026-07-16 02:58:17",
+      "completed_at": "2026-07-16T02:58:19.684534Z",
+      "app_name": "Spotify",
+      "source_app_id": "324684580",
+      "vertical_name": "Music",
+      "storefront": "us",
+      "errors": [],
+      "pages": [
+        {
+          "run_id": 2,
+          "raw_page_id": 35,
+          "app_storefront_id": 6,
+          "app_name": "Spotify",
+          "source_app_id": "324684580",
+          "storefront": "us",
+          "page_number": 1,
+          "response_hash": "38064127b31fa56338b21d6e9351c850170b4e27ead0d9ce69b897c90ea32cec",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        },
+        {
+          "run_id": 2,
+          "raw_page_id": 36,
+          "app_storefront_id": 6,
+          "app_name": "Spotify",
+          "source_app_id": "324684580",
+          "storefront": "us",
+          "page_number": 2,
+          "response_hash": "f181d60aeb155c789cc0dde22d755509f0136cec71220613117cb81420b9f376",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        }
+      ]
+    },
+    {
+      "ingestion_run_app_stat_id": 14,
+      "ingestion_run_id": 2,
+      "app_id": 2,
+      "app_storefront_id": 2,
+      "run_status": "completed",
+      "pages_requested": 2,
+      "pages_fetched": 2,
+      "reviews_parsed": 100,
+      "reviews_inserted": 0,
+      "reviews_updated": 100,
+      "reviews_rejected": 0,
+      "flags_created": 0,
+      "failed_requests": 0,
+      "flag_counts": {
+        "non_english_or_unknown_language": 1,
+        "too_short_review": 8
+      },
+      "created_at": "2026-07-16 02:58:06",
+      "completed_at": "2026-07-16T02:58:09.241831Z",
+      "app_name": "Uber",
+      "source_app_id": "368677368",
+      "vertical_name": "Mobility",
+      "storefront": "us",
+      "errors": [],
+      "pages": [
+        {
+          "run_id": 2,
+          "raw_page_id": 27,
+          "app_storefront_id": 2,
+          "app_name": "Uber",
+          "source_app_id": "368677368",
+          "storefront": "us",
+          "page_number": 1,
+          "response_hash": "e8a0fdcce15343f473b43a870002f36a8502f1315d44d5c51894ad9b53654dc6",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        },
+        {
+          "run_id": 2,
+          "raw_page_id": 28,
+          "app_storefront_id": 2,
+          "app_name": "Uber",
+          "source_app_id": "368677368",
+          "storefront": "us",
+          "page_number": 2,
+          "response_hash": "a60e9f64af70a9116668944131990f99d60fa2c243839ba5f486f8a25841a233",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        }
+      ]
+    },
+    {
+      "ingestion_run_app_stat_id": 22,
+      "ingestion_run_id": 2,
+      "app_id": 10,
+      "app_storefront_id": 10,
+      "run_status": "completed",
+      "pages_requested": 2,
+      "pages_fetched": 2,
+      "reviews_parsed": 100,
+      "reviews_inserted": 0,
+      "reviews_updated": 100,
+      "reviews_rejected": 0,
+      "flags_created": 0,
+      "failed_requests": 0,
+      "flag_counts": {
+        "non_english_or_unknown_language": 1,
+        "rating_text_mismatch": 2,
+        "too_short_review": 7
+      },
+      "created_at": "2026-07-16 02:58:27",
+      "completed_at": "2026-07-16T02:58:29.275508Z",
+      "app_name": "Venmo",
+      "source_app_id": "351727428",
+      "vertical_name": "Finance",
+      "storefront": "us",
+      "errors": [],
+      "pages": [
+        {
+          "run_id": 2,
+          "raw_page_id": 43,
+          "app_storefront_id": 10,
+          "app_name": "Venmo",
+          "source_app_id": "351727428",
+          "storefront": "us",
+          "page_number": 1,
+          "response_hash": "bb122650db75d0ce70267f290a497a4189fe1c862cd615132f8e903c5f2fa7f8",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        },
+        {
+          "run_id": 2,
+          "raw_page_id": 44,
+          "app_storefront_id": 10,
+          "app_name": "Venmo",
+          "source_app_id": "351727428",
+          "storefront": "us",
+          "page_number": 2,
+          "response_hash": "7dc98389a8c49cde9265df4a5fe3b696c2d5fd7e85d43661d4a1aef2ed3160cd",
+          "parse_status": "parsed",
+          "entry_count": 50,
+          "parse_error": null
+        }
+      ]
+    }
+  ]
+}

@@ -6,7 +6,7 @@ from pathlib import Path
 
 from src.apple_rss_client import AppleRSSClient, AppleRSSClientError
 from src.database import Database
-from src.models import AppConfig, ProjectConfig, RunStats
+from src.models import AppConfig, AppRunStats, ProjectConfig, RunStats
 from src.normalizer import normalize_review
 from src.parser import extract_review_entries, has_next_page
 from src.quality_flags import build_quality_flags
@@ -41,7 +41,15 @@ class IngestionService:
             for app in apps:
                 stats.apps_attempted += 1
                 app_db_id, storefront_id = self.database.get_app_context(app)
+                app_stats = AppRunStats(pages_requested=max_pages)
+                app_stat_id = self.database.create_run_app_stat(
+                    run_id=run_id,
+                    app_id=app_db_id,
+                    app_storefront_id=storefront_id,
+                    pages_requested=max_pages,
+                )
                 app_had_success = False
+                app_had_error = False
                 for page in range(1, max_pages + 1):
                     try:
                         result = self.client.fetch_page(
@@ -52,10 +60,14 @@ class IngestionService:
                         )
                     except AppleRSSClientError as exc:
                         stats.failed_requests += 1
-                        errors.append(str(exc))
+                        app_stats.failed_requests += 1
+                        app_stats.errors.append(str(exc))
+                        errors.append(f"{app.app_name}: {exc}")
+                        app_had_error = True
                         break
 
                     stats.pages_fetched += 1
+                    app_stats.pages_fetched += 1
                     fetched_at = utc_now_iso()
                     response_hash = sha256_text(result.raw_text)
                     raw_path = self._save_raw_page(app, page, result.raw_text)
@@ -76,6 +88,7 @@ class IngestionService:
                     try:
                         entries = extract_review_entries(result.payload)
                         stats.reviews_parsed += len(entries)
+                        app_stats.reviews_parsed += len(entries)
                         page_inserted = 0
                         page_updated = 0
                         page_rejected = 0
@@ -115,16 +128,28 @@ class IngestionService:
                                     page_updated += 1
                                 flags = build_quality_flags(normalized, duplicate_text=duplicate)
                                 page_flags += self.database.insert_quality_flags(review_id, flags)
+                                for flag in flags:
+                                    app_stats.flag_counts[flag.flag_type] = (
+                                        app_stats.flag_counts.get(flag.flag_type, 0) + 1
+                                    )
+                                    stats.flag_counts[flag.flag_type] = stats.flag_counts.get(flag.flag_type, 0) + 1
                             self.database.set_raw_page_status(raw_page_id, "parsed")
                         stats.reviews_inserted += page_inserted
                         stats.reviews_updated += page_updated
                         stats.reviews_rejected += page_rejected
                         stats.flags_created += page_flags
+                        app_stats.reviews_inserted += page_inserted
+                        app_stats.reviews_updated += page_updated
+                        app_stats.reviews_rejected += page_rejected
+                        app_stats.flags_created += page_flags
                         app_had_success = True
                     except Exception as exc:
                         with self.database.transaction():
                             self.database.set_raw_page_status(raw_page_id, "parse_error", str(exc))
-                        errors.append(f"{app.app_name} page {page}: {exc}")
+                        error_message = f"{app.app_name} page {page}: {exc}"
+                        errors.append(error_message)
+                        app_stats.errors.append(error_message)
+                        app_had_error = True
                         self.logger.exception(
                             "page_processing_failed",
                             extra={"app_name": app.app_name, "app_id": app.app_id, "page": page, "error": str(exc)},
@@ -134,6 +159,8 @@ class IngestionService:
                         break
                 if app_had_success:
                     self.database.mark_storefront_success(storefront_id)
+                app_status = "completed_with_errors" if app_had_error else "completed"
+                self.database.finish_run_app_stat(stat_id=app_stat_id, status=app_status, stats=app_stats)
 
             status = "completed_with_errors" if errors else "completed"
         except Exception as exc:

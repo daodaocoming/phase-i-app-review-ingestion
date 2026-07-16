@@ -59,6 +59,28 @@ def main() -> None:
         else:
             print("  No ingestion runs recorded.")
 
+        if latest:
+            print("\nMost recent app-level outcomes")
+            app_rows = db.connection.execute(
+                """
+                SELECT x.run_status, x.pages_fetched, x.reviews_parsed, x.reviews_inserted,
+                       x.reviews_updated, x.reviews_rejected, x.flags_created,
+                       x.failed_requests, a.app_name
+                FROM ingestion_run_app_stats x
+                JOIN apps a ON a.app_id=x.app_id
+                WHERE x.ingestion_run_id=?
+                ORDER BY a.app_name
+                """,
+                (latest["ingestion_run_id"],),
+            ).fetchall()
+            for row in app_rows:
+                print(
+                    f"  {row['app_name']}: {row['run_status']} | pages={row['pages_fetched']} | "
+                    f"parsed={row['reviews_parsed']} | inserted={row['reviews_inserted']} | "
+                    f"updated={row['reviews_updated']} | rejected={row['reviews_rejected']} | "
+                    f"flags={row['flags_created']} | failures={row['failed_requests']}"
+                )
+
         print("\nReview sample")
         samples = db.connection.execute(
             """

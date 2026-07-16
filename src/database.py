@@ -6,7 +6,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Iterator
 
-from src.models import AppConfig, NormalizedReview, ProjectConfig, QualityFlag, RunStats
+from src.models import AppConfig, AppRunStats, NormalizedReview, ProjectConfig, QualityFlag, RunStats
 from src.utils import canonical_json, sha256_text, utc_now_iso
 
 
@@ -45,6 +45,14 @@ class Database:
     def initialize(self, schema_path: str | Path) -> None:
         schema = Path(schema_path).read_text(encoding="utf-8")
         self.connection.executescript(schema)
+        # Keep existing prototype databases usable when the additive run-summary
+        # fields are introduced after an earlier Phase I run.
+        columns = {
+            row["name"]
+            for row in self.connection.execute("PRAGMA table_info(ingestion_runs)").fetchall()
+        }
+        if "flag_counts" not in columns:
+            self.connection.execute("ALTER TABLE ingestion_runs ADD COLUMN flag_counts TEXT")
         self.connection.commit()
 
     def seed_config(self, config: ProjectConfig) -> dict[str, int]:
@@ -131,13 +139,57 @@ class Database:
         self.connection.commit()
         return int(cursor.lastrowid)
 
+    def create_run_app_stat(self, *, run_id: int, app_id: int, app_storefront_id: int, pages_requested: int) -> int:
+        cursor = self.connection.execute(
+            """
+            INSERT INTO ingestion_run_app_stats (
+                ingestion_run_id, app_id, app_storefront_id, run_status, pages_requested
+            ) VALUES (?, ?, ?, 'running', ?)
+            """,
+            (run_id, app_id, app_storefront_id, pages_requested),
+        )
+        self.connection.commit()
+        return int(cursor.lastrowid)
+
+    def finish_run_app_stat(
+        self,
+        *,
+        stat_id: int,
+        status: str,
+        stats: AppRunStats,
+    ) -> None:
+        self.connection.execute(
+            """
+            UPDATE ingestion_run_app_stats SET
+                run_status=?, pages_fetched=?, reviews_parsed=?, reviews_inserted=?,
+                reviews_updated=?, reviews_rejected=?, flags_created=?, failed_requests=?,
+                flag_counts=?, error_summary=?, completed_at=?
+            WHERE ingestion_run_app_stat_id=?
+            """,
+            (
+                status,
+                stats.pages_fetched,
+                stats.reviews_parsed,
+                stats.reviews_inserted,
+                stats.reviews_updated,
+                stats.reviews_rejected,
+                stats.flags_created,
+                stats.failed_requests,
+                json.dumps(stats.flag_counts, ensure_ascii=False, sort_keys=True),
+                json.dumps(stats.errors, ensure_ascii=False) if stats.errors else None,
+                utc_now_iso(),
+                stat_id,
+            ),
+        )
+        self.connection.commit()
+
     def finish_ingestion_run(self, run_id: int, status: str, stats: RunStats, errors: list[str]) -> None:
         self.connection.execute(
             """
             UPDATE ingestion_runs SET
                 run_status=?, completed_at=?, apps_requested=?, pages_fetched=?,
                 reviews_parsed=?, reviews_inserted=?, reviews_updated=?, reviews_rejected=?,
-                flags_created=?, failed_requests=?, error_summary=?
+                flags_created=?, failed_requests=?, flag_counts=?, error_summary=?
             WHERE ingestion_run_id=?
             """,
             (
@@ -151,6 +203,7 @@ class Database:
                 stats.reviews_rejected,
                 stats.flags_created,
                 stats.failed_requests,
+                json.dumps(stats.flag_counts, ensure_ascii=False, sort_keys=True),
                 json.dumps(errors, ensure_ascii=False) if errors else None,
                 run_id,
             ),

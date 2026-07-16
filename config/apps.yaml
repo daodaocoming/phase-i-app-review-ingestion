@@ -23,6 +23,78 @@ apps:
     enabled: true
     notes: Consumer language-learning application.
 
+  - app_id: "389801252"
+    app_name: Instagram
+    vertical: Social
+    storefront: us
+    expected_language: en
+    enabled: true
+    notes: Photo and short-form social platform.
+
+  - app_id: "297606951"
+    app_name: Amazon
+    vertical: Shopping
+    storefront: us
+    expected_language: en
+    enabled: true
+    notes: General marketplace and shopping application.
+
+  - app_id: "324684580"
+    app_name: Spotify
+    vertical: Music
+    storefront: us
+    expected_language: en
+    enabled: true
+    notes: Music and audio streaming application.
+
+  - app_id: "401626263"
+    app_name: Airbnb
+    vertical: Travel
+    storefront: us
+    expected_language: en
+    enabled: true
+    notes: Travel accommodation and experiences marketplace.
+
+  - app_id: "493145008"
+    app_name: Headspace
+    vertical: Health and Fitness
+    storefront: us
+    expected_language: en
+    enabled: true
+    notes: Meditation and mindfulness application.
+
+  - app_id: "422689480"
+    app_name: Gmail
+    vertical: Productivity
+    storefront: us
+    expected_language: en
+    enabled: true
+    notes: Consumer email and productivity application.
+
+  - app_id: "351727428"
+    app_name: Venmo
+    vertical: Finance
+    storefront: us
+    expected_language: en
+    enabled: true
+    notes: Peer-to-peer payments application.
+
+  - app_id: "719972451"
+    app_name: DoorDash
+    vertical: Food and Drink
+    storefront: us
+    expected_language: en
+    enabled: true
+    notes: Food delivery marketplace application.
+
+  - app_id: "585027354"
+    app_name: Google Maps
+    vertical: Navigation
+    storefront: us
+    expected_language: en
+    enabled: true
+    notes: Maps, directions, and local discovery application.
+
 settings:
   max_pages_per_app: 2
   timeout_seconds: 15

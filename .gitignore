@@ -5,6 +5,8 @@ __pycache__/
 database/*.db
 database/*.db-*
 data/raw/*.json
+data/raw/**/*.json
 data/processed/*.csv
+data/processed/**/*.csv
 logs/*.log
 .DS_Store

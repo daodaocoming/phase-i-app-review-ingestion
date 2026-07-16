@@ -103,6 +103,19 @@ It is not sufficient as a guaranteed long-term production API because:
 - response availability or shape may change without notice
 - organizational legal/policy approval is still required before production deployment
 
+## Controlled Scale-Up Validation
+
+The next validation uses a fixed 12-app cohort across 11 verticals, two pages per
+app, and three repeated runs against the same SQLite database. Each run writes a
+small JSON summary with app-level counters and retained raw-page observations.
+The final Markdown report compares response hashes and parsed review-ID sets for
+the same app/page so changing recent-review windows are visible.
+
+The default downstream export deliberately excludes `reviewer_id`, `author_label`,
+`author_uri`, and `author_fingerprint`. Quality flags remain heuristic review
+signals and must not be used as sentiment labels without a separate labeling or
+weak-labeling design.
+
 ## Recommendation
 
 Proceed with this source for teaching, feasibility, and low-frequency prototype ingestion. Schedule conservative periodic runs if building a rolling history, monitor raw-page schema and review-window behavior, and keep the source adapter replaceable.

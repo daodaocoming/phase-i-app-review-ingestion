@@ -54,11 +54,15 @@ Raw review objects that failed hard validation, with reason and run/page linkage
 
 ### `review_quality_flags`
 
-Soft data-quality concerns associated with loaded reviews. `(review_id, flag_type)` is unique.
+Soft, heuristic data-quality concerns associated with loaded reviews. `(review_id, flag_type)` is unique. These flags are not sentiment labels or ground-truth annotations.
+
+### `ingestion_run_app_stats`
+
+One row per app and ingestion run. It stores app-level page, parsed/inserted/updated/rejected review, quality-flag, failure, and status metrics for controlled validation.
 
 ### `training_review_dataset`
 
-Flat SQL view joining reviews to app, vertical, and storefront metadata. It excludes public reviewer identity fields by design and exposes lineage ids for reproducibility.
+Flat SQL view joining reviews to app, vertical, and storefront metadata. It excludes public reviewer identity fields by design and exposes lineage ids for reproducibility. The default CSV exporter uses an explicit allowlist and does not export `reviewer_id`, `author_label`, `author_uri`, or `author_fingerprint`.
 
 ## Timestamp Convention
 

@@ -14,6 +14,7 @@ from src.database import Database
 from src.ingestion_service import IngestionService
 from src.logging_utils import configure_logging
 from src.parser import extract_review_entries, has_next_page
+from src.validation_reporting import write_run_summary
 
 
 def select_apps(config, app_ids: list[str] | None, storefront: str | None):
@@ -57,6 +58,10 @@ def main() -> None:
     parser.add_argument("--config-path", default="config/apps.yaml")
     parser.add_argument("--schema-path", default="database/phase_i_database_schema.sql")
     parser.add_argument("--raw-dir", default="data/raw")
+    parser.add_argument(
+        "--summary-output",
+        help="Write a JSON run summary to this path; defaults to outputs/validation/run_summaries/run_<id>.json.",
+    )
     parser.add_argument("--log-level", default="INFO", choices=["DEBUG", "INFO", "WARNING", "ERROR"])
     args = parser.parse_args()
 
@@ -84,7 +89,13 @@ def main() -> None:
         status = database.connection.execute(
             "SELECT run_status FROM ingestion_runs WHERE ingestion_run_id=?", (run_id,)
         ).fetchone()[0]
-    print(json.dumps({"run_id": run_id, "status": status, **stats.as_dict()}, indent=2))
+    summary_path = (
+        ROOT / args.summary_output
+        if args.summary_output
+        else ROOT / "outputs/validation/run_summaries" / f"run_{run_id}.json"
+    )
+    write_run_summary(ROOT / args.db_path, run_id, summary_path)
+    print(json.dumps({"run_id": run_id, "status": status, "summary_output": str(summary_path), **stats.as_dict()}, indent=2))
 
 
 if __name__ == "__main__":

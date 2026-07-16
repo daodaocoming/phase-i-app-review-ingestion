@@ -98,6 +98,20 @@ class QualityFlag:
 
 
 @dataclass
+class AppRunStats:
+    pages_requested: int = 0
+    pages_fetched: int = 0
+    reviews_parsed: int = 0
+    reviews_inserted: int = 0
+    reviews_updated: int = 0
+    reviews_rejected: int = 0
+    flags_created: int = 0
+    failed_requests: int = 0
+    flag_counts: dict[str, int] = field(default_factory=dict)
+    errors: list[str] = field(default_factory=list)
+
+
+@dataclass
 class RunStats:
     apps_attempted: int = 0
     pages_fetched: int = 0
@@ -108,6 +122,7 @@ class RunStats:
     reviews_rejected: int = 0
     flags_created: int = 0
     failed_requests: int = 0
+    flag_counts: dict[str, int] = field(default_factory=dict)
 
     def as_dict(self) -> dict[str, int]:
         return self.__dict__.copy()

@@ -14,6 +14,7 @@ apps.yaml
        -> database
        -> quality_flags
   -> SQLite training view
+  -> per-run JSON summary and validation report
   -> CSV exporter
 ```
 
@@ -22,7 +23,7 @@ apps.yaml
 - `parser.py`: reads Apple feed structure and returns only review-like entries.
 - `normalizer.py`: minimally cleans text, converts numbers, normalizes timestamps to UTC, hashes source objects, and applies lightweight language detection.
 - `validator.py`: classifies hard failures that cannot safely enter `reviews`.
-- `quality_flags.py`: adds explainable soft warnings without deleting usable reviews.
+- `quality_flags.py`: adds explainable heuristic warnings without deleting usable reviews or creating sentiment labels.
 - `database.py`: initializes SQLite, seeds configuration, records runs/raw pages, and performs transactional review upserts.
 - `ingestion_service.py`: coordinates the end-to-end workflow while isolating failures by app/page/review.
 - `scripts/`: provides student-friendly CLI entry points.
@@ -36,9 +37,10 @@ apps.yaml
 5. Parse review entries; feed metadata is ignored.
 6. Normalize and hard-validate each review.
 7. Send invalid reviews to `rejected_review_records`.
-8. Upsert valid reviewers/reviews and add soft flags.
+8. Upsert valid reviewers/reviews and add heuristic quality flags.
 9. Commit page processing and continue until no entries/no next link/max pages.
-10. Update run counters and final status.
+10. Update aggregate and per-app run counters and final status.
+11. Write a summary artifact that preserves app-level outcomes and source-page observations.
 
 ## Failure Behavior
 

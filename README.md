@@ -59,11 +59,28 @@ python scripts/init_db.py --db-path database/demo.db
 
 ## Run Live Ingestion
 
-Run the three-app prototype cohort with at most two pages per app:
+Run the controlled 12-app validation cohort with at most two pages per app:
 
 ```bash
 python scripts/run_ingestion.py --max-pages 2
 ```
+
+For controlled scale-up validation, use one database across repeated runs:
+
+```bash
+python scripts/init_db.py --db-path database/validation_scale.db
+python scripts/run_ingestion.py \
+  --db-path database/validation_scale.db \
+  --raw-dir data/raw/validation_scale \
+  --max-pages 2
+python scripts/generate_validation_report.py \
+  --db-path database/validation_scale.db \
+  --run-id 1 --run-id 2 --run-id 3 \
+  --output outputs/validation/controlled_scale_validation.md
+```
+
+Each non-dry run writes a machine-readable summary under
+`outputs/validation/run_summaries/` unless `--summary-output` is supplied.
 
 Useful filters and options:
 
@@ -113,7 +130,7 @@ Tests use a local Apple-shaped JSON fixture and do not require network access.
 python -m pytest -q
 ```
 
-The suite covers metadata filtering, parsing, rating/timestamp normalization, hard rejection, quality flags, raw-page linkage, and idempotent upserts.
+The suite covers metadata filtering, parsing, rating/timestamp normalization, hard rejection, heuristic quality flags, raw-page linkage, per-app run accounting, privacy-safe exports, and idempotent upserts.
 
 ## Idempotency
 
@@ -151,7 +168,7 @@ Soft flags preserve usable reviews while making concerns queryable:
 | `missing_author_metadata` | Both public author label and URI are absent |
 | `parser_fallback_used` | Feed supplied a single entry object instead of the usual list |
 
-These are transparent heuristics, not final classifiers.
+These are transparent heuristics for quality review and filtering, not sentiment labels, ground-truth annotations, or final classifiers.
 
 ## Add Another App
 
@@ -168,6 +185,9 @@ Add an item under `apps` in `config/apps.yaml` with all required fields:
 ```
 
 Run `python scripts/init_db.py` again. Seeding is an upsert, so existing reviews are preserved.
+
+The controlled validation cohort contains 12 enabled apps across multiple verticals.
+Keep this manifest stable while comparing repeated runs.
 
 ## Apple RSS Limitations and Compliance
 

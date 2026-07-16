@@ -64,7 +64,32 @@ CREATE TABLE IF NOT EXISTS ingestion_runs (
     reviews_rejected INTEGER NOT NULL DEFAULT 0 CHECK (reviews_rejected >= 0),
     flags_created INTEGER NOT NULL DEFAULT 0 CHECK (flags_created >= 0),
     failed_requests INTEGER NOT NULL DEFAULT 0 CHECK (failed_requests >= 0),
+    flag_counts TEXT,
     error_summary TEXT
+);
+
+CREATE TABLE IF NOT EXISTS ingestion_run_app_stats (
+    ingestion_run_app_stat_id INTEGER PRIMARY KEY,
+    ingestion_run_id INTEGER NOT NULL,
+    app_id INTEGER NOT NULL,
+    app_storefront_id INTEGER NOT NULL,
+    run_status TEXT NOT NULL CHECK (run_status IN ('running', 'completed', 'completed_with_errors', 'failed')),
+    pages_requested INTEGER NOT NULL DEFAULT 0 CHECK (pages_requested >= 0),
+    pages_fetched INTEGER NOT NULL DEFAULT 0 CHECK (pages_fetched >= 0),
+    reviews_parsed INTEGER NOT NULL DEFAULT 0 CHECK (reviews_parsed >= 0),
+    reviews_inserted INTEGER NOT NULL DEFAULT 0 CHECK (reviews_inserted >= 0),
+    reviews_updated INTEGER NOT NULL DEFAULT 0 CHECK (reviews_updated >= 0),
+    reviews_rejected INTEGER NOT NULL DEFAULT 0 CHECK (reviews_rejected >= 0),
+    flags_created INTEGER NOT NULL DEFAULT 0 CHECK (flags_created >= 0),
+    failed_requests INTEGER NOT NULL DEFAULT 0 CHECK (failed_requests >= 0),
+    flag_counts TEXT,
+    error_summary TEXT,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    completed_at TEXT,
+    FOREIGN KEY (ingestion_run_id) REFERENCES ingestion_runs(ingestion_run_id),
+    FOREIGN KEY (app_id) REFERENCES apps(app_id),
+    FOREIGN KEY (app_storefront_id, app_id) REFERENCES app_storefronts(app_storefront_id, app_id),
+    UNIQUE (ingestion_run_id, app_storefront_id)
 );
 
 CREATE TABLE IF NOT EXISTS raw_feed_pages (
@@ -153,6 +178,8 @@ CREATE TABLE IF NOT EXISTS review_quality_flags (
 CREATE INDEX IF NOT EXISTS idx_apps_vertical_id ON apps(vertical_id);
 CREATE INDEX IF NOT EXISTS idx_app_storefronts_storefront ON app_storefronts(storefront);
 CREATE INDEX IF NOT EXISTS idx_raw_feed_pages_run ON raw_feed_pages(ingestion_run_id);
+CREATE INDEX IF NOT EXISTS idx_ingestion_run_app_stats_run ON ingestion_run_app_stats(ingestion_run_id);
+CREATE INDEX IF NOT EXISTS idx_ingestion_run_app_stats_app ON ingestion_run_app_stats(app_id);
 CREATE INDEX IF NOT EXISTS idx_reviews_app_published ON reviews(app_id, published_at);
 CREATE INDEX IF NOT EXISTS idx_reviews_storefront_published ON reviews(app_storefront_id, published_at);
 CREATE INDEX IF NOT EXISTS idx_reviews_rating ON reviews(rating);
