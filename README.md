@@ -43,6 +43,13 @@ python -m pip install -r requirements.txt
 
 The same install command was verified with Python 3.13.5 on July 5, 2026.
 
+For the Feature Engineering and Weak Labeling v1 notebook, install the
+separate DS dependencies:
+
+```bash
+python -m pip install -r requirements-ds.txt
+```
+
 ## Initialize SQLite
 
 ```bash
@@ -121,6 +128,28 @@ python scripts/export_training_dataset.py \
   --english-only \
   --output data/processed/training_reviews_en.csv
 ```
+
+## Build the Feature and Weak-Label Dataset
+
+The v1 DS layer maps ratings 1-2 to `negative`, 3 to `neutral`, and 4-5 to
+`positive`. It adds transparent text, time, quality-flag, and issue-keyword
+features while keeping possible label noise separately reviewable.
+
+```bash
+python scripts/build_ds_dataset.py \
+  --db-path database/validation_scale.db \
+  --output data/processed/review_features_v1.csv \
+  --summary-output outputs/ds_v1/feature_summary.json
+```
+
+Then open and run `notebooks/weak_label_baseline_v1.ipynb` from the repository
+root. The notebook performs descriptive analysis only. Because the weak label
+is derived directly from the rating, rating must not be used as a predictor in
+later models.
+
+See [docs/weak_labeling_strategy_v1.md](docs/weak_labeling_strategy_v1.md) for
+the label rules, feature definitions, noise limitations, and recommended manual
+evaluation.
 
 ## Run Tests
 
@@ -203,4 +232,14 @@ The logical model is portable. A later deployment should convert ISO timestamp t
 
 ## Verified Prototype Result
 
-On July 5, 2026, two network-enabled runs fetched two pages each for Facebook, Uber, and Duolingo. The database contains 12 raw pages, 400 unique reviews, and 52 quality flags. The training CSV export contains 400 rows. See [docs/feasibility_report.md](docs/feasibility_report.md) for exact run details and observed source inconsistency.
+The early July 5, 2026 feasibility run covered Facebook, Uber, and Duolingo;
+those results remain documented in
+[docs/feasibility_report.md](docs/feasibility_report.md).
+
+The current controlled validation uses the exact 12-App cohort committed in
+`config/apps.yaml`, with two pages per App and three repeated runs against the
+same database. It produced 1,300 canonical reviews across 12 Apps and 11
+verticals. The machine-readable run summaries preserve the full config snapshot
+used by each run. See
+[outputs/validation/controlled_scale_validation.md](outputs/validation/controlled_scale_validation.md)
+for the current acceptance results and observed source-window changes.
