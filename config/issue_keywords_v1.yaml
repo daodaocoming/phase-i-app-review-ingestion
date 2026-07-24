@@ -1,0 +1,68 @@
+version: issue_keywords_v1
+
+# Transparent, deliberately small keyword lists for exploratory issue signals.
+# Matching is case-insensitive and respects word/phrase boundaries.
+signals:
+  performance_crash:
+    - crash
+    - crashes
+    - crashing
+    - froze
+    - frozen
+    - lag
+    - laggy
+    - slow
+    - performance
+
+  login_account:
+    - account
+    - log in
+    - login
+    - sign in
+    - password
+    - verification
+    - locked out
+
+  payment_billing:
+    - billing
+    - charged
+    - payment
+    - purchase
+    - refund
+    - subscription
+    - fee
+
+  ads:
+    - ad
+    - ads
+    - advertisement
+    - advertisements
+    - commercial
+    - commercials
+
+  update_version:
+    - update
+    - updated
+    - latest version
+    - new version
+    - version
+
+  delivery_service:
+    - delivery
+    - delivered
+    - driver
+    - order
+    - pickup
+    - ride
+    - service
+
+  usability_navigation:
+    - confusing
+    - difficult to use
+    - hard to find
+    - navigation
+    - interface
+    - layout
+    - menu
+    - user experience
+
