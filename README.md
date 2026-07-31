@@ -151,6 +151,28 @@ See [docs/weak_labeling_strategy_v1.md](docs/weak_labeling_strategy_v1.md) for
 the label rules, feature definitions, noise limitations, and recommended manual
 evaluation.
 
+## Run the Weak-Label Quality Audit
+
+Create the reproducible 150-review audit sample and annotation template:
+
+```bash
+python scripts/create_weak_label_audit.py \
+  --input data/processed/review_features_v1.csv \
+  --seed 20260730
+```
+
+Fill `data/processed/weak_label_audit_v1/annotation_template.csv` and save it
+as `annotations.csv`. The analyzer validates the controlled values and writes
+the report only after all 150 rows are annotated:
+
+```bash
+python scripts/analyze_weak_label_audit.py \
+  --annotations data/processed/weak_label_audit_v1/annotations.csv
+```
+
+The audit files remain separate from `review_features_v1.csv`; the 150 audited
+review IDs should be held out from later model training and evaluation.
+
 ## Run Tests
 
 Tests use a local Apple-shaped JSON fixture and do not require network access.

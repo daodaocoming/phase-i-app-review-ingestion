@@ -8,5 +8,6 @@ data/raw/*.json
 data/raw/**/*.json
 data/processed/*.csv
 data/processed/**/*.csv
+data/processed/weak_label_audit_v1/
 logs/*.log
 .DS_Store
