@@ -52,9 +52,9 @@ Use English-interpretable, non-short negative, positive reviews with weak_label_
 
 Class gates: negative=pass, neutral=fail, positive=fail.
 Unflagged training gates: negative=pass, neutral=fail, positive=pass.
-Signal gates: performance_crash=review, login_account=review, payment_billing=pass, ads=pass, update_version=pass, delivery_service=pass, usability_navigation=pass.
-Recheck QC: **passed**; core fields agreement=100.0%, issue relevance agreement=99.6%.
+Issue-signal screening status (provisional; not permanent validation): performance_crash=refine, login_account=refine, payment_billing=candidate, ads=candidate, update_version=candidate, delivery_service=candidate, usability_navigation=candidate, service=candidate, account=candidate, version=refine.
+Intra-annotator consistency recheck: **passed**; core fields agreement=100.0%, issue relevance agreement=99.6%.
 
 ## Limitations
 
-This is a small, manually annotated diagnostic sample from the retained Apple RSS window. The booster strata are intentionally non-proportional, and the annotation is single-person with a 15% recheck.
+This is a small, manually annotated diagnostic sample from the retained Apple RSS window. The booster strata are intentionally non-proportional, the annotation is single-person, and the 23-review recheck measures intra-annotator consistency rather than independent annotator agreement. Issue-signal rates are provisional and remain versioned, reviewable candidate rules.

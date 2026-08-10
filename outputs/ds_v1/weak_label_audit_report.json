@@ -483,7 +483,8 @@
       "account_term_relevance": 1.0,
       "version_term_relevance": 1.0
     },
-    "relevance_kappa_mean": 0.9646153846153845
+    "relevance_kappa_mean": 0.9646153846153845,
+    "qc_type": "intra_annotator_consistency"
   },
   "decisions": {
     "class_gate": {
@@ -509,6 +510,18 @@
       "service": true,
       "account": true,
       "version": false
+    },
+    "signal_status": {
+      "performance_crash": "refine",
+      "login_account": "refine",
+      "payment_billing": "candidate",
+      "ads": "candidate",
+      "update_version": "candidate",
+      "delivery_service": "candidate",
+      "usability_navigation": "candidate",
+      "service": "candidate",
+      "account": "candidate",
+      "version": "refine"
     },
     "qc_pass": true,
     "qc_status": "passed",

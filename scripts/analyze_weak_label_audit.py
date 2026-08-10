@@ -303,6 +303,17 @@ def _decision_summary(agreement: dict[str, Any], signals: dict[str, Any], qc: di
         name: details["relevance"]["estimate"] >= 0.80
         for name, details in signals["broad_terms"].items()
     }
+    # These are screening statuses, not permanent validation claims.  The
+    # counts are intentionally small and the audit was single-annotator.
+    signal_status = {}
+    for name, details in {
+        **signals["signals"],
+        **signals["broad_terms"],
+    }.items():
+        estimate = details["relevance"]["estimate"]
+        signal_status[name] = (
+            "candidate" if estimate >= 0.80 else "refine" if estimate >= 0.60 else "review"
+        )
     qc_pass = None if qc is None else (
         qc.get("overall_percent_agreement", 0.0) >= 0.80
         and qc.get("kappa", {}).get("rating_label_agreement", 0.0) >= 0.60
@@ -325,6 +336,7 @@ def _decision_summary(agreement: dict[str, Any], signals: dict[str, Any], qc: di
         "training_class_gate": training_class_gate,
         "signal_gate": signal_gate,
         "broad_term_gate": term_gate,
+        "signal_status": signal_status,
         "qc_pass": qc_pass,
         "qc_status": "pending_recheck" if qc is None else ("passed" if qc_pass else "failed"),
         "recommended_training_rule": training_rule,
@@ -436,16 +448,22 @@ def _markdown(report: dict[str, Any]) -> str:
     lines += ["", "## Training-data recommendation", "", report["decisions"]["recommended_training_rule"], ""]
     lines.append("Class gates: " + ", ".join(f"{key}={'pass' if value else 'fail'}" for key, value in report["decisions"]["class_gate"].items()) + ".")
     lines.append("Unflagged training gates: " + ", ".join(f"{key}={'pass' if value else 'fail'}" for key, value in report["decisions"]["training_class_gate"].items()) + ".")
-    lines.append("Signal gates: " + ", ".join(f"{key}={'pass' if value else 'review'}" for key, value in report["decisions"]["signal_gate"].items()) + ".")
+    lines.append(
+        "Issue-signal screening status (provisional; not permanent validation): "
+        + ", ".join(
+            f"{key}={value}" for key, value in report["decisions"]["signal_status"].items()
+        )
+        + "."
+    )
     if "recheck_qc" in report:
         lines.append(
-            f"Recheck QC: **{report['decisions']['qc_status']}**; core fields agreement="
+            f"Intra-annotator consistency recheck: **{report['decisions']['qc_status']}**; core fields agreement="
             f"{report['recheck_qc']['overall_percent_agreement']:.1%}, issue relevance agreement="
             f"{report['recheck_qc']['relevance_overall_percent_agreement']:.1%}."
         )
     else:
-        lines.append(f"Recheck QC: **{report['decisions']['qc_status']}**.")
-    lines += ["", "## Limitations", "", "This is a small, manually annotated diagnostic sample from the retained Apple RSS window. The booster strata are intentionally non-proportional, and the annotation is single-person with a 15% recheck.", ""]
+        lines.append(f"Intra-annotator consistency recheck: **{report['decisions']['qc_status']}**.")
+    lines += ["", "## Limitations", "", "This is a small, manually annotated diagnostic sample from the retained Apple RSS window. The booster strata are intentionally non-proportional, the annotation is single-person, and the 23-review recheck measures intra-annotator consistency rather than independent annotator agreement. Issue-signal rates are provisional and remain versioned, reviewable candidate rules.", ""]
     return "\n".join(lines)
 
 
@@ -490,6 +508,7 @@ def main() -> None:
         "signal_reliability": _signal_reliability(merged),
     }
     if qc is not None:
+        qc["qc_type"] = "intra_annotator_consistency"
         report["recheck_qc"] = qc
     report["decisions"] = _decision_summary(report["agreement_by_class"], report["signal_reliability"], qc)
     report_path = _resolve(args.report)

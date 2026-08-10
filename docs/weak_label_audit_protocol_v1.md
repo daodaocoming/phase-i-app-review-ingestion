@@ -4,8 +4,10 @@
 
 This audit evaluates the rating-derived weak labels and transparent issue/noise
 heuristics in `review_features_v1.csv`. It is a validation artifact, not a new
-training dataset. The audited 150 review IDs should remain held out from any
-future model evaluation or training experiment.
+training dataset. The audited 150 review IDs must remain held out from model
+training and the primary weak-label evaluation. Clear positive/negative audit
+rows may be used only as a secondary human-reviewed diagnostic; mixed and
+unclear rows remain outside binary evaluation.
 
 The current frame contains 1,300 reviews, 683 negative, 83 neutral, and 534
 positive weak labels. There are 241 rows with `weak_label_needs_review=1`.
@@ -70,14 +72,17 @@ Fill `recheck_template.csv` independently, then run the same command with
 
 The report calculates class agreement, a rating/text confusion matrix, mixed
 and unclear rates, warning validity for each noise reason, issue-signal
-relevance, broad-term relevance, and single-annotator recheck agreement.
+relevance, broad-term relevance, and intra-annotator consistency from the
+single-annotator recheck. The recheck is not independent annotator agreement.
 
 Use the following gates consistently:
 
 - A weak-label class passes when weighted agreement is at least 80% and unclear
   sentiment is at most 10%.
-- An issue signal or broad term is retained as a candidate feature at 80%+
-  relevance, refined at 60–79%, and removed from v2 below 60%.
+- An issue signal or broad term is screened as a candidate feature at 80%+
+  relevance, refined at 60–79%, and reviewed below 60%. These are provisional
+  statuses from a small audit, not permanent validation claims; retain every
+  rule in a versioned, reviewable configuration.
 - Initial training candidates are English-interpretable negative/positive rows
   with `weak_label_needs_review=0`; neutral rows enter only if the neutral gate
   passes. Noise flags are not rewritten into manual sentiment labels.

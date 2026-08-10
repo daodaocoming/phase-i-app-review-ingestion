@@ -171,7 +171,26 @@ python scripts/analyze_weak_label_audit.py \
 ```
 
 The audit files remain separate from `review_features_v1.csv`; the 150 audited
-review IDs should be held out from later model training and evaluation.
+review IDs must be held out from model training and the primary weak-label
+split. Clear positive/negative audited rows may be used only as a secondary
+human-reviewed diagnostic set; mixed and unclear rows remain outside binary
+evaluation.
+
+## Run the Filtered Binary Baseline
+
+The baseline uses the audited-v1 feature export as an immutable input, applies
+the versioned `issue_keywords_v2.yaml` rules, and excludes the audit IDs before
+filtering to English, non-short, unflagged negative and positive reviews:
+
+```bash
+python scripts/run_binary_sentiment_baseline.py
+```
+
+The command writes Markdown/JSON analysis and prediction artifacts under
+`outputs/ds_v1/`. It compares TF-IDF alone with TF-IDF plus the provisional v2
+issue signals, uses class-weighted logistic regression, keeps normalized-text
+duplicates in one split, and reports both a weak-label holdout and the
+secondary human-reviewed diagnostic.
 
 ## Run Tests
 

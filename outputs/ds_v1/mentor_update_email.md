@@ -9,10 +9,11 @@ verticals; the main noise reasons; and the issue signals. As expected, there
 was no neutral-unflagged stratum because every three-star review is marked with
 `neutral_rating`.
 
-For quality control, I completed a 23-review single-annotator recheck. The
-three core annotation fields had 100% agreement with kappa=1.00. Issue-signal
-and broad-term relevance had 99.6% agreement overall, with one changed issue
-relevance judgment.
+For quality control, I completed a 23-review recheck by the same annotator.
+This measures intra-annotator consistency, not independent annotator agreement.
+The three core annotation fields had 100% agreement with kappa=1.00.
+Issue-signal and broad-term relevance had 99.6% agreement overall, with one
+changed issue relevance judgment.
 
 The main findings are:
 
@@ -28,7 +29,9 @@ The main findings are:
 - The strongest issue signals were payment/billing, ads, update/version,
   delivery/service, and usability/navigation. Performance/crash and
   login/account should be refined. The broad terms `service` and `account`
-  were reasonably reliable, while `version` was less reliable.
+  were reasonably reliable, while `version` was less reliable. These rates
+  are provisional because the audited counts are small; all rules remain
+  versioned and reviewable.
 
 Based on the audit, I propose using only English-interpretable, non-short,
 unflagged negative and positive reviews for a simple binary baseline, while

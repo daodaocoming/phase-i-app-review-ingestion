@@ -75,6 +75,20 @@ URIs, reviewer IDs, and author fingerprints are excluded.
 The generated summary JSON records the complete ordered column list and the
 CSV SHA-256 digest for reproducibility.
 
+## Filtered Binary Baseline
+
+The reproducible baseline uses `scripts/run_binary_sentiment_baseline.py` with
+the audited-v1 feature export as an immutable input and the versioned
+`config/issue_keywords_v2.yaml` rules. It excludes audited IDs and matching
+normalized review text groups, then retains only English-interpretable,
+non-short, unflagged negative and positive reviews. The primary comparison is
+TF-IDF word unigrams/bigrams alone versus the same text features plus the
+provisional v2 issue indicators, both using class-weighted logistic regression.
+Rating, rating-group, neutral-rating, weak-label metadata, quality flags, App,
+and other rating-derived fields are excluded from predictors. The audited
+sample is evaluated only as a secondary diagnostic when the annotation gives a
+clear positive or negative judgment.
+
 ## Known Sources of Label Noise
 
 The v1 heuristics expose some observable risk but cannot resolve meaning:

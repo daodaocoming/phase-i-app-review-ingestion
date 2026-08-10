@@ -1,0 +1,94 @@
+version: issue_keywords_v2
+
+# Candidate issue rules refined after the 150-review audit.  The rules remain
+# provisional: v2 narrows contextual false positives without claiming that the
+# small audited counts validate any signal permanently.
+signals:
+  performance_crash:
+    - crash
+    - crashes
+    - crashing
+    - app froze
+    - app freezes
+    - app freezing
+    - freezing up
+    - lag
+    - laggy
+    - app performance
+    - performance issue
+    - performance issues
+    - slow to load
+    - loads slowly
+    - frozen screen
+    - screen is frozen
+    - unresponsive
+
+  login_account:
+    - login
+    - password
+    - verification
+    - locked out
+    - can't log in
+    - cannot log in
+    - unable to log in
+    - trouble logging in
+    - won't let me log in
+    - can't sign in
+    - cannot sign in
+    - unable to sign in
+    - trouble signing in
+    - won't let me sign in
+    - hacked account
+    - account hacked
+    - compromised account
+    - account compromised
+    - suspended account
+    - account suspended
+    - disabled account
+    - account disabled
+    - locked account
+    - account locked
+    - account recovery
+    - recover account
+
+  payment_billing:
+    - billing
+    - charged
+    - payment
+    - purchase
+    - refund
+    - subscription
+    - fee
+
+  ads:
+    - ad
+    - ads
+    - advertisement
+    - advertisements
+    - commercial
+    - commercials
+
+  update_version:
+    - update
+    - updated
+    - latest version
+    - new version
+
+  delivery_service:
+    - delivery
+    - delivered
+    - driver
+    - order
+    - pickup
+    - ride
+    - service
+
+  usability_navigation:
+    - confusing
+    - difficult to use
+    - hard to find
+    - navigation
+    - interface
+    - layout
+    - menu
+    - user experience
