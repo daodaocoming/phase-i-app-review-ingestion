@@ -9,5 +9,8 @@ data/raw/**/*.json
 data/processed/*.csv
 data/processed/**/*.csv
 data/processed/weak_label_audit_v1/
+outputs/ds_v1/cross_app_error_review.csv
+outputs/ds_v1/cross_app_generalization_predictions.csv
+outputs/ds_v1/cross_app_mentor_update_email.md
 logs/*.log
 .DS_Store

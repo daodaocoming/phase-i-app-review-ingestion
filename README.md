@@ -192,6 +192,29 @@ issue signals, uses class-weighted logistic regression, keeps normalized-text
 duplicates in one split, and reports both a weak-label holdout and the
 secondary human-reviewed diagnostic.
 
+## Run the Cross-App Generalization Evaluation
+
+The follow-up evaluation keeps the v1 baseline and audit artifacts frozen and
+tests transfer to an unseen product. It runs leave-one-App-out across all 12
+Apps: each fold fits the TF-IDF-only, class-weighted logistic-regression model
+on the other 11 Apps and evaluates once on the held-out App. Issue signals are
+retained as error-analysis metadata, but are not predictors in this experiment.
+The 99 clear human-reviewed rows are not used for fitting, selection, or
+benchmarking.
+
+```bash
+python scripts/run_cross_app_generalization.py
+```
+
+The command writes `cross_app_generalization_report.md/.json`, per-review
+predictions, a sampled weakest-App error review, and an English mentor update
+under `outputs/ds_v1/`. The report includes class distributions, Macro F1 and
+balanced accuracy by held-out App, pooled and App-level summaries, frozen-file
+hashes, and deterministic diagnostic tags for short, mixed, OOV, comparative,
+or potentially ambiguous examples. The public report contains aggregate and
+tag-level diagnostics only; per-review predictions, excerpts, and the mentor
+email draft are local-only artifacts.
+
 ## Run Tests
 
 Tests use a local Apple-shaped JSON fixture and do not require network access.
