@@ -1,0 +1,184 @@
+{
+  "schema_version": "final_sentiment_model_v1",
+  "model_version": "tfidf_sentiment_final_v1",
+  "model_path": "artifacts/final_tfidf_sentiment_pipeline.joblib",
+  "model_sha256": "322c5994698932bf3ace504651b600e0c4857fd93616e27bd04ee8bb054a9d28",
+  "training_dataset_path": "artifacts/final_training_dataset.csv",
+  "training_dataset_sha256": "04e1d2874752b21093639aed24fa820edf3b8e7f3c5914889385d2d061175c8a",
+  "input": "data/processed/review_features_v1.csv",
+  "input_sha256": "de4a00e7a7572334507c629ad2b3c2546a452f64a997396ae7e638fb25d12b52",
+  "audit_manifest_sha256": "8a7047e45ec7c349a82e3c79a36efba4a78ba0ba2862fc2c2a1d0339dd6e5fc2",
+  "audit_annotations_sha256": "a238b06ad240a71da2a5a3d29d075f5840d3a8cc7d8862835e342f054c4920b9",
+  "input_mode": "full_feature_export_with_audit_exclusion",
+  "issue_keyword_version": "issue_keywords_v2",
+  "issue_keyword_config_sha256": "4ae5d33d05c3ce9d46191ec2da37d3b7951d352d0cf1949bafc7a9234d46e460",
+  "training_rows": 1002,
+  "class_counts": {
+    "negative": 575,
+    "positive": 427
+  },
+  "audit_rows_excluded": 150,
+  "audit_ids_excluded": 150,
+  "filter_flow": [
+    {
+      "step": "audit_excluded",
+      "removed": 151,
+      "remaining": 1149,
+      "class_counts": {
+        "negative": 621,
+        "neutral": 42,
+        "positive": 486
+      },
+      "app_counts": {
+        "Airbnb": 92,
+        "Amazon": 90,
+        "DoorDash": 91,
+        "Duolingo": 134,
+        "Facebook": 91,
+        "Gmail": 84,
+        "Google Maps": 91,
+        "Headspace": 86,
+        "Instagram": 132,
+        "Spotify": 80,
+        "Uber": 91,
+        "Venmo": 87
+      }
+    },
+    {
+      "step": "binary_labels_only",
+      "removed": 42,
+      "remaining": 1107,
+      "class_counts": {
+        "negative": 621,
+        "positive": 486
+      },
+      "app_counts": {
+        "Airbnb": 91,
+        "Amazon": 86,
+        "DoorDash": 86,
+        "Duolingo": 128,
+        "Facebook": 91,
+        "Gmail": 81,
+        "Google Maps": 89,
+        "Headspace": 76,
+        "Instagram": 125,
+        "Spotify": 78,
+        "Uber": 89,
+        "Venmo": 87
+      }
+    },
+    {
+      "step": "english_interpretable_proxy",
+      "removed": 26,
+      "remaining": 1081,
+      "class_counts": {
+        "negative": 612,
+        "positive": 469
+      },
+      "app_counts": {
+        "Airbnb": 91,
+        "Amazon": 85,
+        "DoorDash": 84,
+        "Duolingo": 123,
+        "Facebook": 84,
+        "Gmail": 77,
+        "Google Maps": 88,
+        "Headspace": 76,
+        "Instagram": 123,
+        "Spotify": 75,
+        "Uber": 88,
+        "Venmo": 87
+      }
+    },
+    {
+      "step": "non_short",
+      "removed": 49,
+      "remaining": 1032,
+      "class_counts": {
+        "negative": 602,
+        "positive": 430
+      },
+      "app_counts": {
+        "Airbnb": 90,
+        "Amazon": 84,
+        "DoorDash": 79,
+        "Duolingo": 123,
+        "Facebook": 73,
+        "Gmail": 74,
+        "Google Maps": 85,
+        "Headspace": 76,
+        "Instagram": 116,
+        "Spotify": 67,
+        "Uber": 83,
+        "Venmo": 82
+      }
+    },
+    {
+      "step": "unflagged",
+      "removed": 30,
+      "remaining": 1002,
+      "class_counts": {
+        "negative": 575,
+        "positive": 427
+      },
+      "app_counts": {
+        "Airbnb": 87,
+        "Amazon": 83,
+        "DoorDash": 79,
+        "Duolingo": 121,
+        "Facebook": 71,
+        "Gmail": 73,
+        "Google Maps": 83,
+        "Headspace": 64,
+        "Instagram": 111,
+        "Spotify": 67,
+        "Uber": 83,
+        "Venmo": 80
+      }
+    }
+  ],
+  "preprocessing": {
+    "input_contract": "raw review text; training combines title and body with a newline",
+    "normalization": [
+      "NFKC",
+      "casefold",
+      "collapse whitespace"
+    ],
+    "tfidf": {
+      "ngram_range": [
+        1,
+        2
+      ],
+      "min_df": 2,
+      "max_df": 0.95,
+      "sublinear_tf": true,
+      "lowercase": false
+    }
+  },
+  "classifier": {
+    "name": "LogisticRegression",
+    "class_weight": "balanced",
+    "C": 1.0,
+    "solver": "liblinear",
+    "max_iter": 1000,
+    "random_state": 20260730
+  },
+  "predictor_policy": {
+    "features": [
+      "normalized review text TF-IDF"
+    ],
+    "excluded": [
+      "rating",
+      "App",
+      "quality flags",
+      "issue signals",
+      "weak-label metadata"
+    ]
+  },
+  "runtime": {
+    "python": "3.13.5",
+    "platform": "macOS-15.7.7-arm64-arm-64bit-Mach-O",
+    "scikit_learn": "1.9.0",
+    "joblib": "1.5.3"
+  }
+}

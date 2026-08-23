@@ -14,3 +14,4 @@ outputs/ds_v1/cross_app_generalization_predictions.csv
 outputs/ds_v1/cross_app_mentor_update_email.md
 logs/*.log
 .DS_Store
+artifacts/final_training_dataset.csv

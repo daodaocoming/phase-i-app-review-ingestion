@@ -215,6 +215,102 @@ or potentially ambiguous examples. The public report contains aggregate and
 tag-level diagnostics only; per-review predictions, excerpts, and the mentor
 email draft are local-only artifacts.
 
+## Train the Final Frozen Model
+
+The final model is deliberately the existing TF-IDF-only baseline. It is fit
+once on the full filtered binary cohort (1,002 rows: 575 negative and 427
+positive) after all audit, language, short-text, and weak-label quality
+exclusions. It does not use App, rating, quality flags, issue signals, or
+manual-review labels as predictors.
+
+For the original source export, audit files, and full provenance checks, run:
+
+```bash
+python scripts/train_final_sentiment_model.py
+```
+
+The command writes the canonical artifacts under `artifacts/`:
+
+```text
+artifacts/final_tfidf_sentiment_pipeline.joblib
+artifacts/final_tfidf_sentiment_pipeline.metadata.json
+artifacts/final_training_dataset.csv
+```
+
+The final cohort can be distributed through controlled storage when exact
+retraining is required. Because it contains source review text, it is ignored
+by Git and should not be committed to a public repository. From a fresh clone,
+place the approved cohort at the documented path before running:
+
+```bash
+python scripts/train_final_sentiment_model.py \
+  --filtered-input artifacts/final_training_dataset.csv
+```
+
+The metadata records the input, training cohort, audit separation, dependency
+versions, model parameters, and SHA-256 hashes. The frozen evaluation metrics
+remain the metrics in `outputs/ds_v1/binary_sentiment_baseline_report.md` and
+`outputs/ds_v1/cross_app_generalization_report.md`; the full-cohort fit is not
+treated as a new test result.
+
+## Run Inference
+
+The persisted Pipeline contains normalization, TF-IDF, and classification, so
+inference applies the same transformations as training:
+
+```bash
+python scripts/predict_sentiment.py \
+  --text "The latest update is excellent and easy to use."
+```
+
+For a CSV with a `review_text` column:
+
+```bash
+python scripts/predict_sentiment.py \
+  --input-csv new_reviews.csv \
+  --text-column review_text \
+  --output-csv predictions.csv
+```
+
+See [MODEL_CARD.md](MODEL_CARD.md) for the label contract, limitations, and
+appropriate uses. See [FINAL_REPORT.md](FINAL_REPORT.md) for the complete
+project story and conclusions.
+
+## Recommended End-to-End Order
+
+For a new data build, the intended order is:
+
+```text
+ingestion -> export -> feature engineering -> weak-label audit
+-> filtered baseline -> cross-App validation -> final full-cohort fit
+-> inference -> tests
+```
+
+The baseline and cross-App reports are frozen evidence. Do not use the
+human-reviewed examples for model selection or tuning, and do not replace the
+TF-IDF-only final model with a more complex experiment as part of this handoff.
+
+## Reproducibility and Data Handling
+
+Raw pages, SQLite databases, generated CSVs, and manual audit working files are
+ignored because they may contain local or source-derived data. The generated
+`artifacts/final_training_dataset.csv` is the minimal handoff dataset needed to
+reproduce the final fit, but it is intentionally excluded from a public GitHub
+commit because it contains review text. If the cohort is distributed through
+controlled storage, use the SHA-256 in the model metadata and place it at the
+documented path before training.
+
+Before handoff, check for credentials and local artifacts, then confirm:
+
+```bash
+git status --short
+python -m pytest -q
+```
+
+The only canonical final model is
+`artifacts/final_tfidf_sentiment_pipeline.joblib`; prior reports remain as
+historical, frozen evaluation evidence rather than competing final models.
+
 ## Run Tests
 
 Tests use a local Apple-shaped JSON fixture and do not require network access.

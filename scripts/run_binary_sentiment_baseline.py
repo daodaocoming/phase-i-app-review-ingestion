@@ -8,7 +8,6 @@ import hashlib
 import json
 import re
 import sys
-import unicodedata
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Iterable
@@ -19,17 +18,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.feature_engineering import ISSUE_SIGNAL_TYPES, build_issue_signals  # noqa: E402
+from src.sentiment_pipeline import TFIDF_KWARGS, normalize_review_text  # noqa: E402
 
 
 DEFAULT_SEED = 20260730
 DEFAULT_N_SPLITS = 5
-TFIDF_KWARGS = {
-    "ngram_range": (1, 2),
-    "min_df": 2,
-    "max_df": 0.95,
-    "sublinear_tf": True,
-    "lowercase": False,
-}
 FORBIDDEN_PREDICTOR_FIELDS = {
     "rating",
     "weak_label",
@@ -72,14 +65,6 @@ def load_issue_keywords(path: Path) -> tuple[str, dict[str, list[str]]]:
             raise ValueError(f"Signal {name!r} must contain a list of strings")
         normalized[str(name)] = terms
     return version, normalized
-
-
-def normalize_review_text(title: str, body: str) -> str:
-    """Create the exact text used both for model input and split grouping."""
-
-    combined = f"{title}\n{body}".strip()
-    combined = unicodedata.normalize("NFKC", combined).casefold()
-    return re.sub(r"\s+", " ", combined).strip()
 
 
 def _bool_value(value: str) -> bool:
